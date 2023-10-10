@@ -6,7 +6,7 @@ BIN=/data/data/com.termux/files/usr/bin
 repo="$HOME/Revancify"
 cp "$repo/revancify" "$BIN/revancify" >/dev/null 2>&1
 root=default
-online="Checking..."
+online="Checking RVX..."
 DATA="$HOME/revancify-data"
 [ ! -d $DATA ] && mkdir -p "$DATA"
 # shellcheck source=/dev/null
@@ -54,7 +54,7 @@ do
     "-r" | "--reinstall")
                         if ping -c 1 google.com >/dev/null 2>&1; then
                             rm -rf $DATA
-                            cd "$repo"/.. && rm -rf "$repo" && git clone --depth=1 https://github.com/decipher3114/Revancify.git && "$repo/revancify" && exit
+                            cd "$repo"/.. && rm -rf "$repo" && git clone --depth=1 https://github.com/TinyDream294/Revancify.git && "$repo/revancify" && exit
                         else
                             echo "No internet Connection !!"
                             exit 1
@@ -132,7 +132,7 @@ checkrevancify() {
         case "$choice" in
         y | Y)
             rm -rf "$repo"
-            git clone --depth=1 https://github.com/decipher3114/Revancify.git && $repo/revancify && exit
+            git clone --depth=1 https://github.com/TinyDream294/Revancify.git && $repo/revancify && exit
             ;;
         n | N)
             echo "Removing revancify completely !!"
