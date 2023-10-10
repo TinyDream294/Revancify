@@ -602,7 +602,7 @@ patchApp() {
         keystore="$repoDir"/revancify.keystore
     fi
     includedPatches=$(jq '.' "$storagePath/$source-patches.json" 2>/dev/null || jq -n '[]')
-    patchesArg=$(jq -n -r --argjson includedPatches "$includedPatches" --arg pkgName "$pkgName" '$includedPatches[] | select(.pkgName == $pkgName).includedPatches | if ((. | length) != 0) then (.[] | "-i " + "\" + . + "\" ) else empty end')
+    patchesArg=$(jq -n -r --argjson includedPatches "$includedPatches" --arg pkgName "$pkgName" '$includedPatches[] | select(.pkgName == $pkgName).includedPatches | if ((. | length) != 0) then (.[] | "-i " + \"" + . + \"" ) else empty end')
     java -jar "$cliSource"-cli-*.jar patch -fpw -b "$patchesSource"-patches-*.jar -m "$integrationsSource"-integrations-*.apk -o "apps/$appName-$appVer/base-$sourceName.apk" $riplibArgs $patchesArg --keystore "$keystore" --custom-aapt2-binary ./aapt2 --options "$storagePath/$source-options.json" "apps/$appName-$appVer/base.apk" 2>&1 | tee "$storagePath/patch_log.txt" | "${header[@]}" --begin 2 0 --ok-label "Continue" --cursor-off-label --programbox "Patching $appName $selectedVer.apk" -1 -1
     echo -e "\n\n\nRooted: $root\nArch: $arch\nApp: $appName v$appVer\nCLI: $(ls "$cliSource"-cli-*.jar)\nPatches: $(ls "$patchesSource"-patches-*.jar)\nIntegrations: $(ls "$integrationsSource"-integrations-*.apk)\nPatches argument: ${patchesArg[*]}" >>"$storagePath/patch_log.txt"
     tput civis
